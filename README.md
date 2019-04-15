@@ -1,6 +1,6 @@
 # react-tetris
 Tetris in pure React. Uses react-keydown
 
-# Limitations
-Still doesn't have that time constraint. Will plan to add this using an HOC, 
-so I can still resolve the game through the componentWillReceiveProps method.
+# How to make it work
+1. Do an npm install.
+2. Then do an npm start. The dev server is handled by Webpack.
