@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { hot } from 'react-hot-loader'
 import { resolveGame, generateRows, drawScreen, hiddenRowCount, DOWN } from './Game'
 import Screen from './app/Screen'
+import GameOver from './app/GameOver'
 import keydown from 'react-keydown'
 import { setInterval } from 'timers';
 
@@ -17,13 +18,19 @@ class App extends Component {
         this.state = {
             rows: generateRows(this.height, this.width),
             piece: null,
+            hiScore: 0,
             score: 0,
             isGameOver: false
         }
 
         this.runGame = this.runGame.bind(this)
+        this.refreshGame = this.refreshGame.bind(this)
 
-        setInterval(() => {
+        this.initInterval()
+    }
+
+    initInterval() {
+        this.intervalId = setInterval(() => {
             this.runGame(DOWN)
         }, this.interval)
     }
@@ -44,17 +51,41 @@ class App extends Component {
                 score: score,
                 isGameOver: isGameOver
             })
+        } else {
+            clearInterval(this.intervalId)
         }
     }
 
+    refreshGame() {
+        const { score, hiScore } = this.state
+        let newHiScore = hiScore > score ? hiScore : score
+
+        this.initInterval()
+
+        this.setState({
+            hiScore: newHiScore,
+            rows: generateRows(this.height, this.width),
+            piece: null,
+            score: 0,
+            isGameOver: false
+        })
+    }
+
     render() {
-        const { piece, rows, score, isGameOver } = this.state
+        const { piece, rows, score, hiScore, isGameOver } = this.state
         const screen = drawScreen(rows, piece)
 
         return (
             <>
                 {
-                    isGameOver ? <h1>Game Over!</h1> : <Screen screen={screen} score={score} />
+                    isGameOver 
+                    ? <GameOver hiScore={hiScore}
+                                score={score}
+                                refreshGame={this.refreshGame}
+                        /> 
+                    : <Screen screen={screen} 
+                              score={score}
+                        />
                 }
             </>
         )
