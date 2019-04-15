@@ -225,7 +225,7 @@ const copy = o => {
     return output;
 }
 
-const DOWN = 'ArrowDown'
+export const DOWN = 'ArrowDown'
 const LEFT = 'ArrowLeft'
 const RIGHT = 'ArrowRight'
 const SPACE = 'Space'

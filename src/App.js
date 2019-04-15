@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { hot } from 'react-hot-loader'
-import { resolveGame, generateRows, drawScreen, hiddenRowCount } from './Game'
+import { resolveGame, generateRows, drawScreen, hiddenRowCount, DOWN } from './Game'
 import Screen from './app/Screen'
 import keydown from 'react-keydown'
+import { setInterval } from 'timers';
 
 class App extends Component {
     constructor(props) {
@@ -11,6 +12,7 @@ class App extends Component {
         this.height = 20 + hiddenRowCount
         this.width = 10
         this.middle = Math.floor(this.width / 2)
+        this.interval = 1000 // in ms
 
         this.state = {
             rows: generateRows(this.height, this.width),
@@ -18,20 +20,30 @@ class App extends Component {
             score: 0,
             isGameOver: false
         }
+
+        this.runGame = this.runGame.bind(this)
+
+        setInterval(() => {
+            this.runGame(DOWN)
+        }, this.interval)
     }
 
     componentWillReceiveProps({ keydown }) {
-        if (!this.state.isGameOver) {
-            if (keydown.event !== null) {
-                const { piece, rows, score, isGameOver } = resolveGame(keydown.event.code, this.state.rows, this.state.piece, this.middle, this.state.score)
+        if (keydown.event !== null) {
+            this.runGame(keydown.event.code)
+        }
+    }
 
-                this.setState({
-                    rows: rows,
-                    piece: piece,
-                    score: score,
-                    isGameOver: isGameOver
-                })
-            }
+    runGame(action) {
+        if (!this.state.isGameOver) {
+            const { piece, rows, score, isGameOver } = resolveGame(action, this.state.rows, this.state.piece, this.middle, this.state.score)
+
+            this.setState({
+                rows: rows,
+                piece: piece,
+                score: score,
+                isGameOver: isGameOver
+            })
         }
     }
 
