@@ -5,7 +5,7 @@ import './styles.css'
 export default Screen = props => {
     const { screen, score } = props
     return (
-        <table>
+        <table className={'table'}>
             <thead>
                 <tr>
                     <td colSpan={screen[0].length}>{'Score: ' + score}</td>

@@ -1,6 +1,27 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.center {
+    width: 50%;
+    margin: 0 auto;
+    border-radius: 10px;
+    background-color: #A0FBC9;
+    padding: 10px;
+}
+
+.table {
+    margin: auto auto;
+    border: 5px solid #FFBD33;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #DAF7A6;
+    box-shadow: 25px 21px 5px -1px rgba(0,0,0,0.32);
+}
+
 .block {
-    height: 10px;
-    width: 10px;
+    height: 20px;
+    width: 20px;
 }
 
 .black {

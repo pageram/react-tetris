@@ -2,7 +2,7 @@ import React from 'react'
 
 const GameOver = props => {
     return (
-        <div>
+        <div className={'center'}>
             <h1>Game Over!</h1>
             <h3>{'Highest score: ' + props.hiScore}</h3>
             <h3>{'Your score: ' + props.score}</h3>
